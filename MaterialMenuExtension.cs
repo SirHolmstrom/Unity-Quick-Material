@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
@@ -31,24 +31,13 @@ public class MaterialMenuExtension : Editor
                     materialFound = true;
 
                     // Check if we already created a replacement for this material
-                    Material newMaterial;
-                    if (!processedMaterials.TryGetValue(sourceMaterial, out newMaterial))
+                    if (!processedMaterials.TryGetValue(sourceMaterial, out Material newMaterial))
                     {
-                        // Create new material with standard shader
-                        newMaterial = new Material(Shader.Find("Standard"));
+                        // Create new material with the same shader as the source
+                        newMaterial = new Material(sourceMaterial.shader);
 
-                        // Copy relevant properties from source material
-                        if (sourceMaterial.HasProperty("_MainTex"))
-                        {
-                            var mainTex = sourceMaterial.GetTexture("_MainTex");
-                            if (mainTex != null)
-                                newMaterial.SetTexture("_MainTex", mainTex);
-                        }
-
-                        if (sourceMaterial.HasProperty("_Color"))
-                        {
-                            newMaterial.SetColor("_Color", sourceMaterial.GetColor("_Color"));
-                        }
+                        // Dynamically copy all relevant properties
+                        CopyMaterialProperties(sourceMaterial, newMaterial);
 
                         // Generate unique path
                         string materialPath = GetUniqueMaterialPath(obj, sourceMaterial);
@@ -61,7 +50,17 @@ public class MaterialMenuExtension : Editor
                         }
 
                         // Save the new material
-                        AssetDatabase.CreateAsset(newMaterial, materialPath);
+                        try
+                        {
+                            AssetDatabase.CreateAsset(newMaterial, materialPath);
+                            Debug.Log($"Material created: {materialPath}");
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Debug.LogError($"Failed to save material: {ex.Message}");
+                            continue;
+                        }
+
                         processedMaterials[sourceMaterial] = newMaterial;
                     }
 
@@ -122,5 +121,38 @@ public class MaterialMenuExtension : Editor
         }
 
         return fullPath;
+    }
+
+    private static void CopyMaterialProperties(Material sourceMaterial, Material newMaterial)
+    {
+        for (int i = 0; i < ShaderUtil.GetPropertyCount(sourceMaterial.shader); i++)
+        {
+            string propertyName = ShaderUtil.GetPropertyName(sourceMaterial.shader, i);
+            var type = ShaderUtil.GetPropertyType(sourceMaterial.shader, i);
+
+            try
+            {
+                switch (type)
+                {
+                    case ShaderUtil.ShaderPropertyType.Color:
+                        newMaterial.SetColor(propertyName, sourceMaterial.GetColor(propertyName));
+                        break;
+                    case ShaderUtil.ShaderPropertyType.Vector:
+                        newMaterial.SetVector(propertyName, sourceMaterial.GetVector(propertyName));
+                        break;
+                    case ShaderUtil.ShaderPropertyType.Float:
+                    case ShaderUtil.ShaderPropertyType.Range:
+                        newMaterial.SetFloat(propertyName, sourceMaterial.GetFloat(propertyName));
+                        break;
+                    case ShaderUtil.ShaderPropertyType.TexEnv:
+                        newMaterial.SetTexture(propertyName, sourceMaterial.GetTexture(propertyName));
+                        break;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"Failed to copy property '{propertyName}': {ex.Message}");
+            }
+        }
     }
 }
