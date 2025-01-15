@@ -1,7 +1,8 @@
 # Unity Quick Material Creator
-One-click solution to convert non-editable "ghost" materials from imported models into fully editable materials. Right-click any grayed-out material to instantly create, copy properties, and replace it - even with multiple objects selected.
+One-click solution to convert non-editable "ghost" materials from imported models into fully editable materials. 
+Right-click any grayed-out material to instantly create, copy properties, and replace it - even with multiple objects selected.
 
-![image](https://github.com/user-attachments/assets/0da23cf8-1ed5-404f-bd6d-53b5ef7b3970)
+![image](https://github.com/user-attachments/assets/fd47d565-0c3c-4248-8328-a251d408961e)
 
 # The Solution
 This tool adds a simple "Create New Material From This" option directly in the material's context menu. One click will:
@@ -12,20 +13,18 @@ This tool adds a simple "Create New Material From This" option directly in the m
 - Automatically replace the original material
 - Works with multiple selected objects!
 
-![image](https://github.com/user-attachments/assets/935c9259-3485-4e1f-ae7c-3ae1f31e84f2)
-![image](https://github.com/user-attachments/assets/83a633d2-e4b7-4e34-9a49-871f46a54fb5)
+![image](https://github.com/user-attachments/assets/97b71270-c9a9-459e-acb6-93c9f406f4ee)
+![image](https://github.com/user-attachments/assets/6ce6a151-4435-4bfc-befd-bc7015ee180e)
 
 # Installation
-- Create an Editor folder in your Unity project if you don't have one
+- Create an Editor folder anywhere in your Unity project if you don't have one
 - Download MaterialMenuExtension.cs and place it in the Editor folder
-- That's it! The option will appear in your material context menus
+- The option will appear in your material context menus
 
 # Usage
-
 - Select one or more objects with imported/existing materials
 - In the Inspector, right-click on the material you want to make editable
 - Select "Create New Material From This"
 
-![image](https://github.com/user-attachments/assets/86eb35d9-a5f0-48ee-99e6-56982ee43926)
-
-The script will create a new material and automatically replace it on all selected objects that use that material.
+![image](https://github.com/user-attachments/assets/350a80b4-0826-4523-9fa7-de36b7f2a195)
+The script can create a new material and automatically replace it on all selected objects that use that material.
