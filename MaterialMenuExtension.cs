@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -156,3 +158,5 @@ public class MaterialMenuExtension : Editor
         }
     }
 }
+
+#endif
