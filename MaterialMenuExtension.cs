@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class MaterialMenuExtension : Editor
 {
     // Add menu item to material context menu
-    [MenuItem("CONTEXT/Material/Create New Material From This")]
+    [MenuItem("CONTEXT/Material/Create New Material(s)")]
     private static void CreateNewMaterialFromThis(MenuCommand command)
     {
         Material sourceMaterial = command.context as Material;
