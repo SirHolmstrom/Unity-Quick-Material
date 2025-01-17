@@ -84,7 +84,7 @@ public class MaterialMenuExtension : Editor
     }
 
     // Validate the menu item
-    [MenuItem("CONTEXT/Material/Create New Material Material(s)", true)]
+    [MenuItem("CONTEXT/Material/Create New Material(s)")]
     private static bool ValidateCreateNewMaterial(MenuCommand command)
     {
         Material material = command.context as Material;
