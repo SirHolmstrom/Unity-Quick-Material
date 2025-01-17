@@ -1,15 +1,15 @@
-#if UNITY_EDITOR
-
 using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+
 public class MaterialMenuExtension : Editor
 {
     // Add menu item to material context menu
     [MenuItem("CONTEXT/Material/Create New Material(s)")]
-    private static void CreateNewMaterialFromThis(MenuCommand command)
+    private static void CreateNewMaterialFromInspector(MenuCommand command)
     {
         Material sourceMaterial = command.context as Material;
         if (sourceMaterial == null) return;
@@ -84,7 +84,7 @@ public class MaterialMenuExtension : Editor
     }
 
     // Validate the menu item
-    [MenuItem("CONTEXT/Material/Create New Material(s)")]
+    [MenuItem("CONTEXT/Material/Create New Material(s)", true)]
     private static bool ValidateCreateNewMaterial(MenuCommand command)
     {
         Material material = command.context as Material;
@@ -158,5 +158,4 @@ public class MaterialMenuExtension : Editor
         }
     }
 }
-
 #endif
